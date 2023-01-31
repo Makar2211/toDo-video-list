@@ -1,0 +1,74 @@
+html {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  background-color: #46457f;
+}
+.App {
+  max-width: 1280px;
+  margin: 0 auto;
+  h1 {
+    text-align: center;
+    color: #fff;
+  }
+  iframe {
+    margin-bottom: 20px;
+  }
+  form {
+    text-align: center;
+    input {
+      width: 300px;
+      height: 40px;
+      border: 2px solid #ffa500;
+      box-sizing: border-box;
+      border-radius: 20px;
+      padding-left: 15px;
+    }
+  }
+  .array-videos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    padding: 20px 0px 0px 0px;
+  }
+  .notFound {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding-top: 200px;
+    h2 {
+      color: #fff;
+      margin: 0px;
+      margin-bottom: 10px;
+    }
+  }
+}
+.btn {
+  width: 200px;
+  height: 40px;
+  border: 2px solid #ffa500;
+  box-sizing: border-box;
+  border-radius: 20px;
+  padding-left: 15px;
+  text-align: center;
+  &:hover {
+    color: white;
+    transition: all ease-in-out 0.3s;
+    background-color: rgb(101, 142, 239);
+  }
+}
+@media screen and (max-width: 880px) {
+  iframe {
+    max-width: 90%;
+    height: 350px;
+  }
+}
+@media screen and (max-width: 516px) {
+  input {
+    margin-bottom: 10px;
+  }
+}
