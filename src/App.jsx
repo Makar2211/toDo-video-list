@@ -6,6 +6,7 @@ function App() {
     typeof localStorage !== 'undefined' ? JSON.parse(localStorage.getItem('video')) || [] : [],
   );
   const [input, setInput] = React.useState('');
+  console.log(input);
 
   const refInput = React.useRef('');
   React.useEffect(() => {
@@ -25,16 +26,21 @@ function App() {
   const checkVideoId = async (event) => {
     event.preventDefault();
     const response = await fetch(
-      `https://www.googleapis.com/youtube/v3/videos?part=id&id=${input}&key=AIzaSyDQMjCi4kF6T2A6gVCrAWzxAN9EUAo6iEw`,
+      `https://www.googleapis.com/youtube/v3/videos?part=id&id=${input.replace(
+        /^https:\/\/youtu\.be\//,
+        '',
+      )}&key=AIzaSyDQMjCi4kF6T2A6gVCrAWzxAN9EUAo6iEw`,
     );
     const result = await response.json();
     if (response.ok && result.items.length) {
-      setVideos([...videos, input]);
+      setVideos([...videos, input.replace(/^https:\/\/youtu\.be\//, '')]);
       document.querySelector('input').value = '';
       focusInput();
     } else {
-      alert('Вы ввели неправильный идентификатор');
+      alert('Вы ввели неправильную ссылку или идентификатор');
+      throw new Error('Вы ввели неправильную ссылку или идентификатор');
     }
+    setInput('');
   };
 
   const removeVideo = (index) => {
@@ -53,8 +59,7 @@ function App() {
           ref={refInput}
           onChange={(event) => setInput(event.target.value)}
           type='text'
-          maxLength='11'
-          placeholder='Введите идентификатор видео'
+          placeholder='Введите ссылку или идентификатор видео'
         />
         <button className='btn' onClick={(event) => checkVideoId(event)}>
           Сохранить в закладки
@@ -69,13 +74,14 @@ function App() {
         </div>
       ) : (
         videos.map((video, index) => {
+          const indexOfVideo = video.replace(/^https:\/\/youtu\.be\//, '');
           return (
             <div key={index} className='array-videos'>
               <iframe
                 title='video'
                 width={800}
                 height={400}
-                src={`https://www.youtube.com/embed/${video}`}
+                src={`https://www.youtube.com/embed/${indexOfVideo}`}
                 allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in- picture'
                 allowFullScreen
               />
